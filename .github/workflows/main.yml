@@ -33,5 +33,5 @@ jobs:
       with:
         name: med-clash-analiz-verileri
         path: frontend/data/
-        retention-days: 7 # Verilerin kaç gün saklanacağını belirler (Maksimum 90)
+        retention-days: 7 # Verilerin kaç gün saklanacağıni belirler (Maksimum 90)
         
