@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeD-An-Cr | İstatistik Paneli</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h2 id="playerName">Oyuncu Adı</h2>
+            <button onclick="window.location.href='index.html'" class="back-btn">Yeni Sorgu</button>
+        </header>
+
+        <div class="grid-layout">
+            <div class="card">
+                <h3>Kupa Bilgileri</h3>
+                <p>Mevcut Kupa: <span id="currentTrophies" class="highlight">-</span></p>
+                <p>En Yüksek Kupa: <span id="bestTrophies">-</span></p>
+            </div>
+
+            <div class="card">
+                <h3>MeD-An-Cr Analiz Raporu</h3>
+                <p>Son Maçlardaki Kazanma Oranı: <span id="winRate" class="highlight">-%</span></p>
+                <p>En Çok Zorlanılan Antikart: <span id="counterCard" class="danger">-</span></p>
+            </div>
+
+            <div class="card chart-card">
+                <h3>Kazanma / Kaybetme Oranı</h3>
+                <canvas id="winLossChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>Gelecek Sandıklar</h3>
+                <div id="chestsList" class="chests-row">
+                    </div>
+            </div>
+
+            <div class="card full-width">
+                <h3>Mevcut Savaş Destesi</h3>
+                <div id="currentDeck" class="deck-row">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/charts.js"></script>
+    <script>
+        // Sayfa yüklendiğinde verileri backend'den çek
+        window.onload = function() {
+            loadDashboardData();
+        }
+    </script>
+</body>
+</html>
