@@ -1,9 +1,9 @@
 name: MeD-An-Cr Oto-Analiz Motoru
 
 on:
-  workflow_dispatch: # GitHub paneli üzerinden el ile tetiklemek için
-  schedule:
-    - cron: '0 0 * * *' # Her gece yarısı otomatik çalışır
+  push:
+    branches: [ "main" ] # Repoda her değişiklik olduğunda otomatik tetiklenmesi için ekledik
+  workflow_dispatch: # Manuel tetikleme butonu
 
 jobs:
   build:
@@ -32,7 +32,6 @@ jobs:
       run: |
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
-        git add frontend/data/
-        git diff-index --quiet HEAD || git commit -m "MeD-An-Cr: Analiz verileri güncellendi [Oto]"
-        git push
+        git add frontend/
+        git diff-index --quiet HEAD || (git commit -m "MeD-An-Cr: Analiz verileri güncellendi [Oto]" && git push)
         
