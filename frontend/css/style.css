@@ -1,0 +1,108 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f8fafc;
+    --accent-color: #3b82f6;
+    --danger-color: #ef4444;
+    --success-color: #10b981;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Giriş Ekranı */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.logo h1 {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.search-box {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.search-box input {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background-color: var(--card-bg);
+    color: white;
+    width: 300px;
+}
+
+.search-box button, .back-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Dashboard Yapısı */
+.dashboard-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.highlight { color: var(--success-color); font-weight: bold; font-size: 1.2rem; }
+.danger { color: var(--danger-color); font-weight: bold; font-size: 1.2rem; }
+
+/* Deste ve Sandık Tasarımları */
+.deck-row, .chests-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.card-item, .chest-item {
+    background: #334155;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 80px;
+}
