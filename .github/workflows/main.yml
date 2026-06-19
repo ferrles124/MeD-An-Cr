@@ -5,9 +5,6 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-permissions:
-  contents: write # GitHub'ın depoya dosya yazabilmesi için gerekli kritik izin
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,10 +28,10 @@ jobs:
       run: |
         python backend/analyzer.py
 
-    - name: Sonuçları Depoya Kaydet ve Yayınla
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add frontend/data/
-        git diff-index --quiet HEAD || (git commit -m "MeD-An-Cr: Analiz verileri güncellendi [Oto]" && git push)
+    - name: Verileri Artifact Olarak Yükle
+      uses: actions/upload-artifact@v4
+      with:
+        name: med-clash-analiz-verileri
+        path: frontend/data/
+        retention-days: 7 # Verilerin kaç gün saklanacağını belirler (Maksimum 90)
         
