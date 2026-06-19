@@ -10,7 +10,6 @@ class MeDActionAnalyzer:
             "Authorization": f"Bearer {self.api_key}",
             "Accept": "application/json"
         }
-        # Analiz etmek istediğin oyuncu etiketlerini buraya ekle
         self.target_players = ["9PJ92QQ2"] 
 
     def _format_tag(self, tag):
@@ -19,21 +18,24 @@ class MeDActionAnalyzer:
     def fetch_data(self, endpoint, player_tag):
         url = f"{self.base_url}/players/{self._format_tag(player_tag)}{endpoint}"
         response = requests.get(url, headers=self.headers)
+        if response.status_code != 200:
+            print(f"API Hatası ({endpoint}): Durum Kodu {response.status_code}")
         return response.json() if response.status_code == 200 else None
 
     def analyze(self):
-        # Çıktı klasörünü oluştur
         os.makedirs("frontend/data", exist_ok=True)
+        print("frontend/data klasörü kontrol edildi/oluşturuldu.")
 
         for tag in self.target_players:
+            print(f"Oyuncu verisi çekiliyor: {tag}")
             profile = self.fetch_data("", tag)
             chests = self.fetch_data("/upcomingchests", tag)
             battle_log = self.fetch_data("/battlelog", tag)
 
             if not profile:
+                print(f"Hata: {tag} için profil verisi alınamadı, atlanıyor.")
                 continue
 
-            # Temel Deste/Galibiyet Analizi
             total_battles = 0
             wins = 0
             for battle in (battle_log or []):
@@ -44,7 +46,6 @@ class MeDActionAnalyzer:
             
             win_rate = round((wins / total_battles) * 100, 2) if total_battles > 0 else 0
 
-            # UI için optimize edilmiş tek bir JSON dosyası hazırla
             output_data = {
                 "name": profile.get("name"),
                 "trophies": profile.get("trophies"),
@@ -54,9 +55,11 @@ class MeDActionAnalyzer:
                 "upcoming_chests": (chests or {}).get("items", [])[:5]
             }
 
-            # Her oyuncunun verisini kendi etiketiyle kaydet
-            with open(f"frontend/data/{tag}.json", "w", encoding="utf-8") as f:
+            file_path = f"frontend/data/{tag}.json"
+            with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(output_data, f, ensure_ascii=False, indent=4)
+            
+            print(f"Başarılı: {file_path} dosyası yazıldı. Oyuncu: {output_data['name']}")
 
 if __name__ == "__main__":
     analyzer = MeDActionAnalyzer()
