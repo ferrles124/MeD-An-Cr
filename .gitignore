@@ -1,0 +1,9 @@
+# Python bağımlılıkları ve sanal ortamlar
+__pycache__/
+*.pyc
+venv/
+.env
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
