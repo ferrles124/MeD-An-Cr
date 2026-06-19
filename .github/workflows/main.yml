@@ -1,0 +1,38 @@
+name: MeD-An-Cr Oto-Analiz Motoru
+
+on:
+  workflow_dispatch: # GitHub paneli üzerinden el ile tetiklemek için
+  schedule:
+    - cron: '0 0 * * *' # Her gece yarısı otomatik çalışır
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Depoyu Klonla
+      uses: actions/checkout@v4
+
+    - name: Python Kurulumu
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Bağımlılıkları Yükle
+      run: |
+        pip install requests
+
+    - name: Analiz Motorunu Çalıştır ve Veri Üret
+      env:
+        CR_API_KEY: ${{ secrets.CR_API_KEY }}
+      run: |
+        python backend/analyzer.py
+
+    - name: Sonuçları Depoya Kaydet ve Yayınla
+      run: |
+        git config --global user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+        git add frontend/data/
+        git diff-index --quiet HEAD || git commit -m "MeD-An-Cr: Analiz verileri güncellendi [Oto]"
+        git push
+        
